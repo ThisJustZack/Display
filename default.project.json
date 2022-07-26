@@ -1,0 +1,30 @@
+{
+  "name":"project",
+  "tree": {
+      "$className": "DataModel",
+      "ReplicatedStorage": {
+        "$className": "ReplicatedStorage",
+        "Packages": {
+            "$className": "Folder",
+            "Fusion": {
+              "Display": {
+                "$path": "src/main"
+              },
+              "$path": "Fusion"
+            }
+        },
+        "Views": {
+          "$path": "src/example/Views"
+        }
+      },
+      "StarterPlayer": {
+        "$className": "StarterPlayer",
+        "StarterPlayerScripts": {
+            "$className": "StarterPlayerScripts",
+            "Example": {
+              "$path": "src/example/Runner"
+            }
+        }
+    }
+  }
+}
