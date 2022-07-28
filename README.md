@@ -1,7 +1,5 @@
 # Display
 
-**There are currently build issues that did not appear throughout two months of extensive testing**
-
 **There is no documentation currently due to Luau types not being written**
 
 **There are some features that are either implemented incorrectly, not implemented completely, or not implemented at all**

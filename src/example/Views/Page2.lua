@@ -27,7 +27,7 @@ function class:build(context)
                 },
 
                 [OnEvent "Activated"] = function()
-                    Navigator.of(context).pushNamed("Main", {});
+                    Navigator.of(context):pushNamed("Main", {});
                 end,
             }
         }

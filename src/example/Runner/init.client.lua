@@ -6,7 +6,7 @@ local Display = Fusion.Display;
 local Application = Display.Application;
 local Theme = Display.Theme;
 
-local Views = require(script.Views);
+local Views = require(ReplicatedStorage.Views);
 
 local app = Application(
     {"Main", {}},
