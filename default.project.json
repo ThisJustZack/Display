@@ -1,5 +1,5 @@
 {
-  "name":"project",
+  "name":"build",
   "tree": {
       "$className": "DataModel",
       "ReplicatedStorage": {
@@ -8,6 +8,9 @@
             "$className": "Folder",
             "Fusion": {
               "Display": {
+                "Type" : {
+                  "$path": "src/type"
+                },
                 "$path": "src/main"
               },
               "$path": "Fusion"

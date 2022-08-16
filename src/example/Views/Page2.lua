@@ -7,17 +7,26 @@ local OnEvent = Fusion.Instances.OnEvent;
 
 local Navigator = Fusion.Display.Navigator;
 local Page = Fusion.Display.Page;
+local Theme = Fusion.Display.Theme;
 
 local class = {};
 
 function class:build(context)
     return New "Frame" {
+        AnchorPoint = Vector2.new(0.5, 0.5);
+        Size = UDim2.fromScale(0.5, 0.5);
+        Position = UDim2.fromScale(0.5, 0.5);
+
+        BackgroundColor3 = Theme.of(context).colors:get()["scaffoldBackgroundColor"];
+
         [Children] = {
             New "TextButton" {
                 AnchorPoint = Vector2.new(0.5, 0.5);
                 Size = UDim2.fromScale(0.5, 0.5);
                 Position = UDim2.fromScale(0.5, 0.5);
                 Text = "Go To Page 1";
+
+                BackgroundColor3 = Theme.of(context).colors:get()["primaryColor"];
 
                 [Children] = {
                     New "UIAspectRatioConstraint" {

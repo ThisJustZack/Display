@@ -2,9 +2,14 @@ local Package = script.Parent;
 
 local TextStyle = require(Package.TextStyle);
 
-local class = {};
+--[[
+	@class TextTheme
+	@client
 
-local CLASS_METATABLE = {__index = class};
+	Material design text theme.
+]]--
+local CLASS_METHODS = {};
+local CLASS_METATABLE = {__index = CLASS_METHODS};
 local CLASS_CONSTRUCTORS = {};
 
 local function new()

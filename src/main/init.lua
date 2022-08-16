@@ -9,23 +9,25 @@ end
 	The entry point for the Display library.
 ]]
 
+
+local PubTypes = require(script.Type.PubTypes)
 local restrictRead = require(script.Parent.Core.Utility.restrictRead)
 
 type Display = {
 	-- version: PubTypes.Version,
 	
-	Application: {}, -- map to constructors
-	BuildContext: {},
-	ColorScheme: {},
-	Device: {},
-	Locale: {},
-	Navigator: {},
-	Page: {},
-	Route: {},
-	TextStyle: {},
-	TextTheme: {},
-	Theme: {},
-	ThemeData: {}
+	Application: PubTypes.ApplicationConstructor,
+	BuildContext: PubTypes.BuildContextConstructor,
+	ColorScheme: PubTypes.ColorSchemeConstructor,
+	Device: PubTypes.DeviceConstructor,
+	Locale: PubTypes.LocaleConstructor,
+	Navigator: PubTypes.NavigatorConstructor,
+	Page: PubTypes.PageConstructor,
+	Route: PubTypes.RouteConstructor,
+	TextStyle: PubTypes.TextStyleConstructor,
+	TextTheme: PubTypes.TextThemeConstructor,
+	Theme: PubTypes.ThemeConstructor,
+	ThemeData: PubTypes.ThemeDataConstructor
 }
 
 return restrictRead("Display", {

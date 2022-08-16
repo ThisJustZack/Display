@@ -1,6 +1,11 @@
-local class = {};
+--[[
+	@class BuildContext
+	@client
 
-local CLASS_METATABLE = {__index = class};
+	A handle to the location of a widget in the widget tree, commonly used in the build method of widgets.
+]]--
+local CLASS_METHODS = {};
+local CLASS_METATABLE = {__index = CLASS_METHODS};
 local CLASS_CONSTRUCTORS = {};
 
 local function new(navigator, theme, locale, states, deviceInformation)

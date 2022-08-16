@@ -1,3 +1,6 @@
+local Players = game:GetService("Players");
+local StarterGui= game:GetService("StarterGui");
+
 local Package = script.Parent;
 
 local Navigator = require(Package.Navigator);
@@ -11,23 +14,25 @@ local Computed = require(Package.Parent.Core.Computed);
 
 local New = require(Package.Parent.Instances.New);
 local Children = require(Package.Parent.Instances.Children);
-local OnEvent = require(Package.Parent.Instances.OnEvent);
 
-local PlayerService = game:GetService("Players");
-local StarterGuiService = game:GetService("StarterGui");
+--[[
+	@class Application
+	@client
 
-local class = {};
-
-local CLASS_METATABLE = {__index = class};
+    A convenience widget that wraps a number of widgets that are commonly required for material design applications.
+]]--
+local CLASS_METHODS = {};
+local CLASS_METATABLE = {__index = CLASS_METHODS};
 local CLASS_CONSTRUCTORS = {};
 
-function class:destroy()
+function CLASS_METHODS:destroy()
 	self.ui:Destroy();
 end
 
-function class:updateState(state: string, value: any)
-	assert(self.states[state], "The state to update must exist");
-	self.states[state]:set(value);
+function CLASS_METHODS:updateState(state: string, value: any)
+	local states = self.states:get();
+	states[state] = value;
+	self.states:set(states);
 end
 
 local function new(initialRoute, routes, theme, states, coreEnabled, coreDisabled)
@@ -35,12 +40,12 @@ local function new(initialRoute, routes, theme, states, coreEnabled, coreDisable
 	
 	self.navigator = Navigator(initialRoute, routes);
 	self.theme = theme or Theme.fallback();
-	self.states = states or {};
+	self.states = State(states or {});
 	self.locale = Locale();
 	self.deviceInformation = Device();
 	
 	self.ui = New "ScreenGui" {
-		Parent = PlayerService.LocalPlayer.PlayerGui;
+		Parent = Players.LocalPlayer.PlayerGui;
 		IgnoreGuiInset = true;
 		
 		[Children] = Computed(function()
@@ -56,9 +61,9 @@ local function new(initialRoute, routes, theme, states, coreEnabled, coreDisable
 	
 	local function removeMatching(a, b)
 		local tbl = {};
-		for aIndex, aItem in ipairs(a) do
+		for _, aItem in a do
 			local match = false;
-			for bIndex, bItem in ipairs(b) do
+			for _, bItem in b do
 				if (aItem == bItem) then
 					match = true;
 					break;
@@ -74,9 +79,9 @@ local function new(initialRoute, routes, theme, states, coreEnabled, coreDisable
 	local function toCoreItemList(items)
 		local tbl = {};
 		if (type(items) == "table") then
-			for _, item in ipairs(items) do
+			for _, item in items do
 				local result = toCoreItemList(item);
-				for _, v in ipairs(result) do
+				for _, v in result do
 					if (not table.find(tbl, v)) then
 						table.insert(tbl, v);
 					end
@@ -84,7 +89,7 @@ local function new(initialRoute, routes, theme, states, coreEnabled, coreDisable
 			end
 		elseif ((typeof(items) == "EnumItem") and (items.EnumType == Enum.CoreGuiType)) then
 			if (items == Enum.CoreGuiType.All) then
-				for _, v in ipairs({Enum.CoreGuiType.Chat, Enum.CoreGuiType.Health, Enum.CoreGuiType.Backpack, Enum.CoreGuiType.EmotesMenu, Enum.CoreGuiType.PlayerList}) do
+				for _, v in {Enum.CoreGuiType.Chat, Enum.CoreGuiType.Health, Enum.CoreGuiType.Backpack, Enum.CoreGuiType.EmotesMenu, Enum.CoreGuiType.PlayerList} do
 					if (not table.find(tbl, v)) then
 						table.insert(tbl, v);
 					end
@@ -98,9 +103,9 @@ local function new(initialRoute, routes, theme, states, coreEnabled, coreDisable
 
 	local function setCoreItems(items, value)
 		local tbl = {};
-		for _, item in ipairs(items) do
+		for _, item in items do
 			if (not table.find(tbl, item)) then
-				StarterGuiService:SetCoreGuiEnabled(item, value);
+				StarterGui:SetCoreGuiEnabled(item, value);
 				table.insert(tbl, item);
 			end
 		end

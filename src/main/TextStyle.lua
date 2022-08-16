@@ -1,8 +1,11 @@
-local Package = script.Parent;
+--[[
+	@class TextStyle
+	@client
 
-local class = {};
-
-local CLASS_METATABLE = {__index = class};
+	An immutable style describing how to format and paint text.
+]]--
+local CLASS_METHODS = {};
+local CLASS_METATABLE = {__index = CLASS_METHODS};
 local CLASS_CONSTRUCTORS = {};
 
 local function new(font, size, lineHeight)

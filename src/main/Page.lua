@@ -1,22 +1,18 @@
 local Package = script.Parent;
 
-local Theme = require(Package.Theme);
-local Locale = require(Package.Locale);
-local Navigator = require(Package.Navigator);
-
 local New = require(Package.Parent.Instances.New);
 
-local class = {};
+--[[
+	@class Page
+	@client
 
-local CLASS_METATABLE = {__index = class};
+	An immutable description of the configuration for a route's user interface.
+]]--
+local CLASS_METHODS = {};
+local CLASS_METATABLE = {__index = CLASS_METHODS};
 local CLASS_CONSTRUCTORS = {};
 
-function class:build(context)
-	local theme = Theme.of(context);
-	local navigator = Navigator.of(context);
-	local locale = Locale.of(context);
-	local uniStates = context.states;
-	
+function CLASS_METHODS:build(context)
 	return New "Frame" {
 		Size = UDim2.fromScale(1, 1);
 		Position = UDim2.fromScale(0, 0);

@@ -1,18 +1,20 @@
+local Players = game:GetService("Players");
+
 local Package = script.Parent;
 
-local ReplicatedStorage = game:GetService("ReplicatedStorage");
-local PlayersService = game:GetService("Players")
-
 local State = require(Package.Parent.Core.Value);
-local Computed = require(Package.Parent.Core.Computed);
 local Enumeration = require(Package.Parent.Field.Choice);
 
 local Camera = workspace.CurrentCamera;
-local PlayerGui = PlayersService.LocalPlayer.PlayerGui;
+local PlayerGui = Players.LocalPlayer.PlayerGui;
 
-local class = {};
-
-local CLASS_METATABLE = {__index = class};
+--[[
+	@class Device
+	@client
+	@unreleased
+]]--
+local CLASS_METHODS = {};
+local CLASS_METATABLE = {__index = CLASS_METHODS};
 local CLASS_CONSTRUCTORS = {};
 
 function CLASS_CONSTRUCTORS.of(context)

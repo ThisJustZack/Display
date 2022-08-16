@@ -8,12 +8,17 @@ local schemeFromColors = Color.schemeFromColors;
 local State = require(Package.Parent.Core.Value);
 local Computed = require(Package.Parent.Core.Computed);
 
-local class = {};
+--[[
+	@class ColorScheme
+	@client
 
-local CLASS_METATABLE = {__index = class};
+	A set of 25 colors based on the Material spec that can be used to configure the color properties of most components.
+]]--
+local CLASS_METHODS = {};
+local CLASS_METATABLE = {__index = CLASS_METHODS};
 local CLASS_CONSTRUCTORS = {};
 
-function class:update(primary: Color3, secondary: Color3, error: Color3, neutral: Color3, tertiary: Color3?)
+function CLASS_METHODS:update(primary: Color3, secondary: Color3, error: Color3, neutral: Color3, tertiary: Color3?)
 	self.primary:set(primary);
 	self.secondary:set(secondary);
 	self.tertiary:set(tertiary);

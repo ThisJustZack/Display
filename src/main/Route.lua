@@ -2,9 +2,14 @@ local Package = script.Parent;
 
 local State = require(Package.Parent.Core.Value);
 
-local class = {};
+--[[
+	@class Route
+	@client
 
-local CLASS_METATABLE = {__index = class};
+	An abstraction for an entry managed by a Navigator.
+]]--
+local CLASS_METHODS = {};
+local CLASS_METATABLE = {__index = CLASS_METHODS};
 local CLASS_CONSTRUCTORS = {};
 
 local function new(name, arguments)
@@ -14,7 +19,7 @@ local function new(name, arguments)
 	self.arguments = {};
 	
 	if (arguments ~= nil) then
-		for key, value in ipairs(arguments) do
+		for key, value in arguments do
 			arguments[key] = State(value);
 		end
 	end

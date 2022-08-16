@@ -4,9 +4,14 @@ local ThemeData = require(Package.ThemeData);
 local ColorScheme = require(Package.ColorScheme);
 local TextTheme = require(Package.TextTheme);
 
-local class = {};
+--[[
+	@class Theme
+	@client
 
-local CLASS_METATABLE = {__index = class};
+	A theme describes the colors and typographic choices of an application.
+]]--
+local CLASS_METHODS = {};
+local CLASS_METATABLE = {__index = CLASS_METHODS};
 local CLASS_CONSTRUCTORS = {};
 
 local function new(colorScheme, textTheme)

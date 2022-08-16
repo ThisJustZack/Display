@@ -1,11 +1,15 @@
 local LocalizationService = game:GetService("LocalizationService");
+local Players = game:GetService("Players");
 
-local class = {};
-
-local CLASS_METATABLE = {__index = class};
+--[[
+	@class Locale
+	@client
+]]--
+local CLASS_METHODS = {};
+local CLASS_METATABLE = {__index = CLASS_METHODS};
 local CLASS_CONSTRUCTORS = {};
 
-function class:translate(key, arguments)
+function CLASS_METHODS:translate(key, arguments)
 	local translation = "";
 	
 	local foundTranslation = pcall(function()
@@ -21,7 +25,7 @@ end
 local function new()
 	local self = setmetatable({}, CLASS_METATABLE);
 	
-	local player = game.Players.LocalPlayer;
+	local player = Players.LocalPlayer;
 	
 	local split = string.split(string.reverse(string.gsub(string.reverse(player.LocaleId), '-', '&', 1)), '&');
 	

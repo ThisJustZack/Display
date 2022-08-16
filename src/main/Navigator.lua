@@ -2,21 +2,24 @@ local Package = script.Parent;
 
 local Route = require(Package.Route);
 
-local State = require(Package.Parent.Core.Value);
+--[[
+	@class Navigator
+	@client
 
-local class = {};
-
-local CLASS_METATABLE = {__index = class};
+	A widget that manages a set of child widgets with a stack discipline.
+]]--
+local CLASS_METHODS = {};
+local CLASS_METATABLE = {__index = CLASS_METHODS};
 local CLASS_CONSTRUCTORS = {};
 
-function class:pushNamed(name, arguments)
+function CLASS_METHODS:pushNamed(name, arguments)
 	local route = Route(name, arguments);
 	self.currentRoute.name:set(name);
 	self.currentRoute.arguments = arguments;
 	table.insert(self.history, route);
 end
 
-function class:pop()
+function CLASS_METHODS:pop()
 	if (#self.history > 1) then
 		local route = self.history[#self.history-1];
 		self.currentRoute.name:set(route.name:get());

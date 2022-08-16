@@ -58,8 +58,8 @@ function Color.schemeFromColors(primary: Color3, secondary: Color3, error: Color
 		neutrals = neutralColors.Light;
 	end
 
-	for _, input in ipairs(inputs) do
-		for key, tone in pairs(accents) do
+	for _, input in inputs do
+		for key, tone in accents do
 			local newKey = string.gsub(key, "typ", input);
 			newKey = string.gsub(newKey, "Typ", input:gsub("^%l", string.upper));
 
@@ -75,14 +75,14 @@ function Color.schemeFromColors(primary: Color3, secondary: Color3, error: Color
 	
 	if (tertiary) then
 		local input = "tertiary";
-		for key, tone in pairs(accents) do
+		for key, tone in accents do
 			local newKey = string.gsub(key, "typ", input);
 			newKey = string.gsub(newKey, "Typ", input:gsub("^%l", string.upper));
 			tbl[newKey] = Color.getColorFromTone(tertiary, tone);
 		end
 	end
 
-	for key, tone in pairs(neutrals) do
+	for key, tone in neutrals do
 		tbl[key] = Color.getColorFromTone(neutral, tone);
 	end
 

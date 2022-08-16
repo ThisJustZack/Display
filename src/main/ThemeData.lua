@@ -1,20 +1,21 @@
 local Package = script.Parent;
 
+local Computed = require(Package.Parent.Core.Computed);
+
 local Color = require(Package.Utility.Color);
 local ColourUtils = require(Package.Utility.ColourUtils);
 
 local getColorFromTone = Color.getColorFromTone;
+local Tailwind = ColourUtils.Palette.Tailwind;
 
-local State = require(Package.Parent.Core.Value);
-local Computed = require(Package.Parent.Core.Computed);
+--[[
+	@class ThemeData
+	@client
 
-local Palette = ColourUtils.Palette;
-
-local Tailwind = Palette.Tailwind;
-
-local class = {};
-
-local CLASS_METATABLE = {__index = class};
+	Defines the configuration of the overall visual Theme for a MaterialApp or a widget subtree within the app.
+]]--
+local CLASS_METHODS = {};
+local CLASS_METATABLE = {__index = CLASS_METHODS};
 local CLASS_CONSTRUCTORS = {};
 
 local function new(colorScheme, textTheme)
@@ -22,112 +23,40 @@ local function new(colorScheme, textTheme)
 	
 	self.colorScheme = colorScheme;
 	self.textTheme = textTheme;
-	
-	local primarySurfaceColor = Computed(function()
-		if (self.colorScheme.isDark:get()) then
-			return self.colorScheme.colors:get()["surface"];
-		end
-		return self.colorScheme.colors:get()["primary"];
-	end);
-	local onPrimarySurfaceColor = Computed(function()
-		if (self.colorScheme.isDark:get()) then
-			return self.colorScheme.colors:get()["onSurface"];
-		end
-		return self.colorScheme.colors:get()["onPrimary"];
-	end);
 
-	self.appBarColor = Computed(function()
-		return primarySurfaceColor:get();
-	end);
-	self.backgroundColor = Computed(function()
-		return self.colorScheme.colors:get()["background"];
-	end);
-	self.canvasColor = Computed(function()
-		return self.colorScheme.colors:get()["background"];
-	end);
-	self.cardColor = Computed(function()
-		return self.colorScheme.colors:get()["surface"];
-	end);
-	self.dialogBackgroundColor = Computed(function()
-		return self.colorScheme.colors:get()["background"];
-	end);
-	self.disabledColor = Computed(function()
-		if (self.colorScheme.isDark:get()) then
-			return getColorFromTone(Color3.fromHex("#ffffff"), 100-38);
-		end
-		return getColorFromTone(Color3.fromRGB(), 38);
-	end);
-	self.dividerColor = Computed(function() -- opacity
-		if (self.colorScheme.isDark:get()) then
-			return getColorFromTone(self.colorScheme.colors:get()["surface"], 100-12);
-		end
-		return getColorFromTone(self.colorScheme.colors:get()["surface"], 12);
-	end);
-	self.errorColor = Computed(function()
-		return self.colorScheme.colors:get()["error"];
-	end);
-	self.focusColor = Computed(function() -- opacity
-		if (self.colorScheme.isDark:get()) then
-			return getColorFromTone(Color3.fromRGB(), 100-12);
-		end
-		return getColorFromTone(Color3.fromHex("#ffffff"), 12);
-	end);
-	self.highlightColor = Computed(function()
-		if (self.colorScheme.isDark:get()) then
-			return getColorFromTone(Color3.fromHex("#cccccc"), 100 - ((64/255) * 100));
-		end
-		return getColorFromTone(Color3.fromHex("#c8c8c8"), (102/255) * 100);
-	end);
-	self.hintColor = Computed(function()
-		if (self.colorScheme.isDark:get()) then
-			return getColorFromTone(Color3.fromRGB(), 100-60);
-		end
-		return getColorFromTone(Color3.fromHex("#ffffff"), 60);
-	end);
-	self.hoverColor = Computed(function() -- opacity
-		if (self.colorScheme.isDark:get()) then
-			return getColorFromTone(Color3.fromRGB(), 100-4);
-		end
-		return getColorFromTone(Color3.fromHex("#ffffff"), 4);
-	end);
-	self.indicatorColor = Computed(function()
-		return onPrimarySurfaceColor:get();
-	end);
-	self.primaryColor = Computed(function()
-		return primarySurfaceColor:get();
-	end);
-	self.scaffoldBackgroundColor = Computed(function()
-		return self.colorScheme.colors:get()["background"];
-	end);
-	self.secondaryHeaderColor = Computed(function()
-		if (self.colorScheme.isDark:get()) then
-			local swatch = Tailwind(Color3.fromHex("#9e9e9e"));
-			return swatch[700]; -- may need to be 50
-		end
-		local swatch = Tailwind(self.colorScheme.colors:get()["primary"]);
-		return swatch[50]; -- may need to be 700
-	end);
-	self.selectedRowColor = State(Color3.fromHex("#f5f5f5"));
-	self.shadowColor = State(Color3.fromRGB());
-	self.splashColor = Computed(function()
-		if (self.colorScheme.isDark:get()) then
-			return getColorFromTone(Color3.fromHex("#cccccc"), (64/255) * 100);
-		end
-		return getColorFromTone(Color3.fromHex("#c8c8c8"), (102/255) * 100);
-	end);
-	self.toggleableActiveColor = Computed(function()
-		if (self.colorScheme.isDark:get()) then
-			local swatch = Tailwind(Color3.fromHex("#64ffda"));
-			return swatch[200];
-		end
-		local swatch = Tailwind(self.colorScheme.colors:get()["primary"]);
-		return swatch[600];
-	end);
-	self.unselectedWidgetColor = Computed(function()
-		if (self.colorScheme.isDark:get()) then
-			return getColorFromTone(Color3.fromHex("#ffffff"), 70);
-		end
-		return getColorFromTone(Color3.fromRGB(), 54);
+	self.colors = Computed(function()
+		local isDark = self.colorScheme.isDark:get();
+		local background = self.colorScheme.colors:get()["background"];
+		local surface = self.colorScheme.colors:get()["surface"];
+		local primary = self.colorScheme.colors:get()["primary"];
+		local onSurface = self.colorScheme.colors:get()["onSurface"];
+		local onPrimary = self.colorScheme.colors:get()["onPrimary"];
+		local primarySurfaceColor = if isDark then surface else primary;
+		local onPrimarySurfaceColor = if isDark then onSurface else onPrimary;
+
+		return {
+			appBarColor = primarySurfaceColor;
+			backgroundColor = background;
+			canvasColor = background;
+			cardColor = surface;
+			dialogBackgroundColor = background;
+			disabledColor = if isDark then getColorFromTone(Color3.fromHex("#ffffff"), 100-38) else getColorFromTone(Color3.fromRGB(), 38);
+			dividerColor = if isDark then getColorFromTone(surface, 100-12) else getColorFromTone(surface, 12);
+			errorColor = self.colorScheme.colors:get()["error"];
+			focusColor = if isDark then getColorFromTone(Color3.fromRGB(), 100-12) else getColorFromTone(Color3.fromHex("#ffffff"), 12);
+			highlightColor = if isDark then getColorFromTone(Color3.fromHex("#cccccc"), 100 - ((64/255) * 100)) else getColorFromTone(Color3.fromHex("#c8c8c8"), (102/255) * 100);
+			hintColor = if isDark then getColorFromTone(Color3.fromRGB(), 100-60) else getColorFromTone(Color3.fromHex("#ffffff"), 60);
+			hoverColor = if isDark then getColorFromTone(Color3.fromRGB(), 100-4) else getColorFromTone(Color3.fromHex("#ffffff"), 4);
+			indicatorColor = onPrimarySurfaceColor;
+			primaryColor = primarySurfaceColor;
+			scaffoldBackgroundColor = background;
+			secondaryHeaderColor = if isDark then Tailwind(Color3.fromHex("#9e9e9e"))[700] else Tailwind(primary)[50];
+			selectedRowColor = Color3.fromHex("#f5f5f5");
+			shadowColor = Color3.fromRGB();
+			splashColor = if isDark then getColorFromTone(Color3.fromHex("#cccccc"), (64/255) * 100) else getColorFromTone(Color3.fromHex("#c8c8c8"), (102/255) * 100);
+			toggleableActiveColor = if isDark then Tailwind(Color3.fromHex("#64ffda"))[200] else Tailwind(primary)[600];
+			unselectedWidgetColor = if isDark then getColorFromTone(Color3.fromHex("#ffffff"), 70) else getColorFromTone(Color3.fromRGB(), 54);
+		};
 	end);
 	
 	return self;
