@@ -1,8 +1,6 @@
 # Display
 
-**The documentation is currently being written**
-
-**There are some features that are either implemented incorrectly, not implemented completely, or not implemented at all**
+This repository is no longer maintained after moving to [React](https://github.com/littensy/react-lua).
 
 Display is a UI framework, built on top of [Fusion](https://github.com/Elttob/Fusion), and is meant to be a port of [Flutter](https://flutter.dev/) with additional tools that are useful for development on ROBLOX.
 
